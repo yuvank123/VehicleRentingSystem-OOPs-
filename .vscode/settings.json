@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "ctime": "cpp",
+        "cstdlib": "cpp",
+        "iostream": "cpp",
+        "string": "cpp",
+        "sstream": "cpp",
+        "fstream": "cpp",
+        "vector": "cpp"
+    }
+}

@@ -1,0 +1,145 @@
+Enterprise:RideEasy Rentals|Owner:Amit Sharma|Phone:9876501234
+Variety:Four Wheeler
+Company:Hyundai
+Model:Creta|Price:1600|Number:GJ03AB5678|Color:White
+Model:Venue|Price:1400|Number:GJ04CD1234|Color:Blue
+Company:Kia
+Model:Seltos|Price:1800|Number:MH01KL9876|Color:Black
+Variety:Two Wheeler
+Company:Yamaha
+Model:FZ|Price:900|Number:GJ09XY3333|Color:Red
+Model:R15|Price:1200|Number:GJ10XY4444|Color:Blue
+Variety:Bicycle
+Company:Trek
+Model:Domane|Price:600|Number:BX03CC2233|Color:Green
+END_ENTERPRISE
+
+Enterprise:UrbanDrive|Owner:Neha Mehta|Phone:9823456781
+Variety:Four Wheeler
+Company:Toyota
+Model:Innova|Price:2000|Number:GJ01MN9988|Color:Silver
+Model:Glanza|Price:1300|Number:GJ02PQ1122|Color:Red
+Company:Skoda
+Model:Kushaq|Price:1900|Number:MH03RT4455|Color:White
+Variety:Two Wheeler
+Company:Suzuki
+Model:Access|Price:850|Number:GJ07OP6677|Color:Blue
+Variety:Bicycle
+Company:Montra
+Model:Helicon|Price:550|Number:BX04DD3344|Color:Black
+END_ENTERPRISE
+
+Enterprise:SwiftGo Rentals|Owner:Karan Patel|Phone:9812345678
+Variety:Four Wheeler
+Company:Maruti
+Model:Brezza|Price:1500|Number:GJ05LM1122|Color:Orange
+Model:Baleno|Price:1400|Number:GJ08NP2233|Color:Grey
+Variety:Two Wheeler
+Company:Bajaj
+Model:Pulsar|Price:950|Number:MH10XY9090|Color:Black
+Model:Dominar|Price:1200|Number:GJ12CD4545|Color:Green
+Variety:Bicycle
+Company:Giant
+Model:Escape|Price:500|Number:BX06EE8899|Color:Yellow
+END_ENTERPRISE
+
+Enterprise:EcoZoom Rentals|Owner:Ravi Desai|Phone:9876543211
+Variety:Four Wheeler
+Company:Honda
+Model:City|Price:1700|Number:GJ03GH7788|Color:Blue
+Company:Nissan
+Model:Magnite|Price:1600|Number:GJ02JK1122|Color:White
+Variety:Two Wheeler
+Company:Royal Enfield
+Model:Classic350|Price:1300|Number:MH08RE9090|Color:Black
+Model:Himalayan|Price:1500|Number:GJ04RE4545|Color:Grey
+Variety:Bicycle
+Company:Hero
+Model:Lectro|Price:400|Number:BX07FF2233|Color:Red
+END_ENTERPRISE
+
+Enterprise:FastTrack Rides|Owner:Simran Kaur|Phone:9765432109
+Variety:Four Wheeler
+Company:Ford
+Model:Ecosport|Price:1800|Number:DL03XY2233|Color:Black
+Model:Endeavour|Price:2500|Number:DL04XY3344|Color:Silver
+Variety:Two Wheeler
+Company:KTM
+Model:Duke200|Price:1400|Number:GJ05KT7788|Color:Orange
+Model:RC390|Price:1700|Number:GJ06KT8899|Color:White
+Variety:Bicycle
+Company:Btwin
+Model:Rockrider|Price:450|Number:BX08GG5566|Color:Green
+END_ENTERPRISE
+
+Enterprise:GoRent Wheels|Owner:Arjun Nair|Phone:9955112233
+Variety:Four Wheeler
+Company:MG
+Model:Hector|Price:2100|Number:GJ11MG4455|Color:Blue
+Model:Astor|Price:1900|Number:MH12MG5566|Color:Red
+Company:Volkswagen
+Model:Polo|Price:1600|Number:GJ13VW6677|Color:White
+Variety:Two Wheeler
+Company:TVS
+Model:Apache|Price:1100|Number:GJ14TV7788|Color:Black
+Variety:Bicycle
+Company:Scott
+Model:Speedster|Price:500|Number:BX09HH3344|Color:Grey
+END_ENTERPRISE
+
+Enterprise:DriveON Rentals|Owner:Mehul Jain|Phone:9822001100
+Variety:Four Wheeler
+Company:Jeep
+Model:Compass|Price:2400|Number:GJ15JP7788|Color:Black
+Company:Isuzu
+Model:MU-X|Price:2600|Number:GJ16IS8899|Color:White
+Variety:Two Wheeler
+Company:Harley Davidson
+Model:Street750|Price:2000|Number:MH20HD9090|Color:Red
+Variety:Bicycle
+Company:Firefox
+Model:Gravel|Price:650|Number:BX10II5566|Color:Blue
+END_ENTERPRISE
+
+Enterprise:ZoomFleet|Owner:Priya Kapoor|Phone:9811002233
+Variety:Four Wheeler
+Company:Mercedes
+Model:GLA|Price:4000|Number:DL05MB7788|Color:Silver
+Company:BMW
+Model:X1|Price:4200|Number:DL06BM8899|Color:Black
+Variety:Two Wheeler
+Company:Ducati
+Model:Monster|Price:2500|Number:DL07DC9900|Color:Red
+Variety:Bicycle
+Company:Cannondale
+Model:Trail|Price:700|Number:BX11JJ6677|Color:Green
+END_ENTERPRISE
+
+Enterprise:WheelzUp|Owner:Ananya Singh|Phone:9977665544
+Variety:Four Wheeler
+Company:Audi
+Model:Q3|Price:3800|Number:MH22AU7788|Color:Blue
+Company:Jaguar
+Model:F-Pace|Price:4500|Number:MH23JG8899|Color:White
+Variety:Two Wheeler
+Company:Benelli
+Model:Imperiale|Price:2100|Number:GJ24BN9900|Color:Black
+Variety:Bicycle
+Company:Polygon
+Model:Strattos|Price:600|Number:BX12KK7788|Color:Yellow
+END_ENTERPRISE
+
+Enterprise:RideHub|Owner:Rohan Malhotra|Phone:9833445566
+Variety:Four Wheeler
+Company:Renault
+Model:Kiger|Price:1600|Number:GJ25RN6677|Color:Grey
+Model:Triber|Price:1500|Number:GJ26RN7788|Color:White
+Company:Datsun
+Model:RediGo|Price:1200|Number:GJ27DT8899|Color:Blue
+Variety:Two Wheeler
+Company:Piaggio
+Model:Vespa|Price:1000|Number:GJ28VP9900|Color:Red
+Variety:Bicycle
+Company:Decathlon
+Model:Riverside|Price:550|Number:BX13LL8899|Color:Black
+END_ENTERPRISE
