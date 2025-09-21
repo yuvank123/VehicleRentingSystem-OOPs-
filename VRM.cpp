@@ -5,17 +5,18 @@
 #include <cstdlib>
 #include <vector>
 #include <ctime>
+
 using namespace std;
 
 class Model
 {
     string modelname, modelnumber, modelcolour;
     double modelprice;
-
+  
 public:
     Model(string nameOfModel = "", double priceOfModel = 0.0, string phonenumberOfModel = "", string colourOfModel = "")
         : modelname(nameOfModel), modelprice(priceOfModel), modelnumber(phonenumberOfModel), modelcolour(colourOfModel) {}
-
+      string getModelName() const { return modelname; }
     friend void displayModel(const Model &m);
 
     void showModel() const
@@ -52,11 +53,13 @@ class Variety
 {
     string vname;
     vector<Company *> companies;
+   
 
 public:
     Variety(string varietyname = "") : vname(varietyname) {};
     vector<Company *> &getCompanies() { return companies; }
     void addCompany(Company *c) { companies.push_back(c); };
+     string getVarietyName() const { return vname; }
     void showVariety() const
     {
         cout << "\n  Variety: " << vname << "\n";
@@ -82,7 +85,10 @@ public:
     vector<Variety *> &getVarieties() { return varieties; }
     void addCompany(Company *c) { companies.push_back(c); }
     void addVariety(Variety *v) { varieties.push_back(v); }
-    void getEnterpriseName() const { cout << "-> " << Enterprisename; }
+  string getEnterpriseName() const { return Enterprisename; }
+
+
+
     void show() const
     {
         cout << "\nEnterprise: " << Enterprisename
@@ -181,6 +187,75 @@ void displayModel(const Model &m)
          << " | Number: " << m.modelnumber
          << " | Color: " << m.modelcolour << "\n";
 }
+class RentalManager; 
+class RentalManager
+{
+    string filename;
+public:
+    RentalManager(string fname = "rentalRecords.txt") : filename(fname) {}
+
+    void storeRentalDetails(const string &username, const string &enterprise,
+                            const string &variety, const string &company,
+                            const string &model)
+    {
+        ofstream file(filename, ios::app);
+        if (!file.is_open())
+        {
+            cerr << "❌ Error: Could not open rental records file!\n";
+            return;
+        }
+
+        time_t now = time(0);
+        char *dt = ctime(&now);
+
+        file << "User: " << username
+             << " | Enterprise: " << enterprise
+             << " | Variety: " << variety
+             << " | Company: " << company
+             << " | Model: " << model
+             << " | Date: " << dt;
+        file << "---------------------------------------------\n";
+        file.close();
+
+        cout << "\n✅ Rental Details Saved Successfully!\n";
+    }
+
+    void processPayment()
+    {
+        int paymentChoice;
+        cout << "\nChoose Payment Method:\n";
+        cout << "1. UPI\n";
+        cout << "2. Debit/Credit Card\n";
+        cout << "3. Cash on Delivery\n";
+        cout << "Enter your choice: ";
+        cin >> paymentChoice;
+
+        switch (paymentChoice)
+        {
+        case 1:
+            cout << "Enter UPI ID: ";
+            {
+                string upi;
+                cin >> upi;
+                cout << "Processing UPI Payment...\n✅ Payment Successful!\n";
+            }
+            break;
+        case 2:
+            cout << "Enter Card Number: ";
+            {
+                string card;
+                cin >> card;
+                cout << "Processing Card Payment...\n✅ Payment Successful!\n";
+            }
+            break;
+        case 3:
+            cout << "You selected Cash on Delivery.\n✅ Order Confirmed!\n";
+            break;
+        default:
+            cout << "Invalid choice! Defaulting to Cash on Delivery.\n✅ Order Confirmed!\n";
+        }
+    }
+};
 
 //====================userDetails===================================
 class UserDetails
@@ -201,11 +276,10 @@ public:
 
         // Show all enterprises
         for (size_t i = 0; i < enterprises.size(); i++)
-        {
-            cout << i + 1 << ". ";
-            enterprises[i]->getEnterpriseName();
-            cout << "\n";
-        }
+{
+    cout << i + 1 << ". " << enterprises[i]->getEnterpriseName() << "\n";
+}
+
 
         int eChoice;
         cout << "\nSelect Enterprise number: ";
@@ -238,7 +312,7 @@ public:
         }
 
         for (size_t i = 0; i < varieties.size(); i++)
-            cout << i + 1 << ". " << "[ " << i + 1 << " ] " << "\n";
+    cout << i + 1 << ". " << varieties[i]->getVarietyName() << "\n";
 
         int vChoice;
         cout << "\nEnter Variety number: ";
@@ -314,6 +388,23 @@ public:
         Model *selectedModel = models[mChoice - 1];
         cout << "\n✅ You Selected:\n";
         displayModel(*selectedModel);
+
+       
+RentalManager rentalManager; //call rentalmanager
+
+string username = "GuestUser";
+string enterpriseName = selectedEnterprise->getEnterpriseName();
+string varietyName = selectedVariety->getVarietyName();
+string modelName = selectedModel->getModelName();
+string companyName = selectedCompany->getCompanyName();
+
+
+// Store rental details
+rentalManager.storeRentalDetails(username, enterpriseName, varietyName, companyName, modelName);
+
+// Ask for payment
+rentalManager.processPayment();
+
 
         // Cleanup memory
         for (auto e : enterprises)
@@ -455,6 +546,7 @@ public:
     }
 };
 
+
 int main()
 {
     cout << "Welcome to Vehicle Rental System\n";
@@ -505,14 +597,7 @@ int main()
         if (portalChoice == 2)
         {
             cout << "You have accessed the Service Provider Portal.\n";
-            // vector<Enterprises *> enterprises = loadData("sellerDetails.txt");
-
-            // for (auto e : enterprises)
-            // {
-            //     e->showEnterprise();
-            //     delete e; // cleanup
-            // }
-            // return 0;
+            
         }
     }
     catch (const std::exception &e)
