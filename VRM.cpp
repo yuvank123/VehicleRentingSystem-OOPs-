@@ -23,6 +23,9 @@ public:
     {
         displayModel(*this);
     }
+
+    double getPrice() const { return modelprice; }
+
 };
 
 class Company
@@ -187,16 +190,16 @@ void displayModel(const Model &m)
          << " | Number: " << m.modelnumber
          << " | Color: " << m.modelcolour << "\n";
 }
-class RentalManager; 
+
 class RentalManager
 {
     string filename;
 public:
     RentalManager(string fname = "rentalRecords.txt") : filename(fname) {}
 
-    void storeRentalDetails(const string &username, const string &enterprise,
+    void storeRentalDetails(const string &username,const string &userphone, const string &enterprise,
                             const string &variety, const string &company,
-                            const string &model)
+                            const string &model,double price)
     {
         ofstream file(filename, ios::app);
         if (!file.is_open())
@@ -209,10 +212,12 @@ public:
         char *dt = ctime(&now);
 
         file << "User: " << username
+             << " | Phone: " << userphone
              << " | Enterprise: " << enterprise
              << " | Variety: " << variety
              << " | Company: " << company
              << " | Model: " << model
+             << " | Price: " << price 
              << " | Date: " << dt;
         file << "---------------------------------------------\n";
         file.close();
@@ -224,23 +229,15 @@ public:
     {
         int paymentChoice;
         cout << "\nChoose Payment Method:\n";
-        cout << "1. UPI\n";
-        cout << "2. Debit/Credit Card\n";
-        cout << "3. Cash on Delivery\n";
+      
+        cout << "1. Debit/Credit Card\n";
+        cout << "2. Cash on Delivery\n";
         cout << "Enter your choice: ";
         cin >> paymentChoice;
 
         switch (paymentChoice)
         {
         case 1:
-            cout << "Enter UPI ID: ";
-            {
-                string upi;
-                cin >> upi;
-                cout << "Processing UPI Payment...\n✅ Payment Successful!\n";
-            }
-            break;
-        case 2:
             cout << "Enter Card Number: ";
             {
                 string card;
@@ -248,7 +245,7 @@ public:
                 cout << "Processing Card Payment...\n✅ Payment Successful!\n";
             }
             break;
-        case 3:
+        case 2:
             cout << "You selected Cash on Delivery.\n✅ Order Confirmed!\n";
             break;
         default:
@@ -256,6 +253,10 @@ public:
         }
     }
 };
+
+string currentUsername;
+string currentPhone;
+
 
 //====================userDetails===================================
 class UserDetails
@@ -392,15 +393,17 @@ public:
        
 RentalManager rentalManager; //call rentalmanager
 
-string username = "GuestUser";
+
 string enterpriseName = selectedEnterprise->getEnterpriseName();
 string varietyName = selectedVariety->getVarietyName();
 string modelName = selectedModel->getModelName();
 string companyName = selectedCompany->getCompanyName();
+double modelPrice = selectedModel->getPrice();
 
 
 // Store rental details
-rentalManager.storeRentalDetails(username, enterpriseName, varietyName, companyName, modelName);
+rentalManager.storeRentalDetails(currentUsername, currentPhone, enterpriseName, varietyName, companyName, modelName, modelPrice);
+
 
 // Ask for payment
 rentalManager.processPayment();
@@ -453,7 +456,10 @@ rentalManager.processPayment();
             file.close();
             cout << "\nRegistration successful!\n";
             cout << "-------------------------------------\n";
-            UserEnterpriseDetailEntry();
+           currentUsername = username;
+           currentPhone = phonenumber;
+          UserEnterpriseDetailEntry();
+
         }
         else
         {
@@ -485,7 +491,27 @@ rentalManager.processPayment();
                 if (uuser == username && upass == password)
                 {
                     cout << "\nLogin successful!\n";
-                    UserEnterpriseDetailEntry();
+                    currentUsername = username;
+
+
+ifstream f(filename);
+string line, u, p, ph;
+while (getline(f, line))
+{
+    stringstream ss(line);
+    getline(ss, u, ',');
+    getline(ss, p, ',');
+    getline(ss, ph, ',');
+    if (u == username)
+    {
+        currentPhone = ph;
+        break;
+    }
+}
+
+UserEnterpriseDetailEntry();
+
+                    
                     return true;
                 }
             }
