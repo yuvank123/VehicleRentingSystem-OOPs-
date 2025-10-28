@@ -8,3 +8,15 @@ User: daksha | Phone: 1234567890 | Enterprise: EcoZoom Rentals | Variety: Four W
 ---------------------------------------------
 User: daksha | Phone: 1234567890 | Enterprise: UrbanDrive | Variety: Four Wheeler | Company: Skoda | Model: Kushaq | Price: 1900 | Date: Wed Oct 08 21:59:28 2025
 ---------------------------------------------
+User: daksha | Phone: 1234567890 | Enterprise: GoRent Wheels | Variety: Two Wheeler | Company: TVS | Model: Apache | Price: 1100 | Date: Thu Oct 09 09:59:54 2025
+---------------------------------------------
+User: daksha | Phone: 1234567890 | Enterprise: RideEasy Rentals | Variety: Two Wheeler | Company: Yamaha | Model: R15 | Price: 1200 | Date: Thu Oct 09 11:15:06 2025
+---------------------------------------------
+User: GuestUser | Enterprise: RideEasy Rentals | Variety: Two Wheeler | Company: Yamaha | Model: R15 | Date: Thu Oct 16 09:23:45 2025
+---------------------------------------------
+User: yuvank_goyal | Phone: 7000290591 | Enterprise: UrbanDrive | Variety: Two Wheeler | Company: Suzuki | Model: Access | Price: 850 | Date: Thu Oct 16 09:34:11 2025
+---------------------------------------------
+User: yuvank_goyal | Phone: 7000290591 | Enterprise: UrbanDrive | Variety: Two Wheeler | Company: Suzuki | Model: Access | Price: 850 | Date: Thu Oct 16 10:08:13 2025
+---------------------------------------------
+User: daksha | Phone: 1234567890 | Enterprise: RideEasy Rentals | Variety: Two Wheeler | Company: Yamaha | Model: R15 | Price: 1200 | Date: Tue Oct 28 14:55:54 2025
+---------------------------------------------
