@@ -143,3 +143,14 @@ Variety:Bicycle
 Company:Decathlon
 Model:Riverside|Price:550|Number:BX13LL8899|Color:Black
 END_ENTERPRISE
+
+Enterprise:yuvankshop|Owner:yuvank_goyal|Phone:7000290591|ID:ENT15819
+Variety:car
+Company:honda
+Model:city|Price:1200|Number:123456|Color:blue
+Company:chingu
+Model:dak|Price:4500|Number:45738|Color:green
+Variety:Bike
+Company:tornado
+Model:poot|Price:700|Number:87586|Color:silver
+END_ENTERPRISE
