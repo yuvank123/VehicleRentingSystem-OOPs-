@@ -20,3 +20,5 @@ User: yuvank_goyal | Phone: 7000290591 | Enterprise: UrbanDrive | Variety: Two W
 ---------------------------------------------
 User: daksha | Phone: 1234567890 | Enterprise: RideEasy Rentals | Variety: Two Wheeler | Company: Yamaha | Model: R15 | Price: 1200 | Date: Tue Oct 28 14:55:54 2025
 ---------------------------------------------
+User: daksha | Enterprise: UrbanDrive | Variety: Two Wheeler | Company: Suzuki | Model: Access | Date: Thu Oct 30 10:04:24 2025
+---------------------------------------------

@@ -143,3 +143,8 @@ Variety:Bicycle
 Company:Decathlon
 Model:Riverside|Price:550|Number:BX13LL8899|Color:Black
 END_ENTERPRISE
+Enterprise:tata|Owner:daksha|Phone:8328581736|ID:ENT28294
+Variety:bicycle
+Company:motarola
+Model:bmx|Price:800|Number:67897|Color:blue
+END_ENTERPRISE

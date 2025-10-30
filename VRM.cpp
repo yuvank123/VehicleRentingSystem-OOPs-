@@ -5,9 +5,19 @@
 #include <cstdlib>
 #include <vector>
 #include <ctime>
+
 using namespace std;
 
-class Model
+class showingDetails
+{
+public:
+    virtual void show() const
+    {
+        cout << "showing Details wait for a while...";
+    }
+};
+
+class Model : public showingDetails
 {
     string modelname, modelnumber, modelcolour;
     double modelprice;
@@ -15,16 +25,19 @@ class Model
 public:
     Model(string nameOfModel = "", double priceOfModel = 0.0, string phonenumberOfModel = "", string colourOfModel = "")
         : modelname(nameOfModel), modelprice(priceOfModel), modelnumber(phonenumberOfModel), modelcolour(colourOfModel) {}
-
+    string getModelName() const { return modelname; }
     friend void displayModel(const Model &m);
 
-    void showModel() const
+    void show() const override
+
     {
         displayModel(*this);
     }
+
+    double getPrice() const { return modelprice; }
 };
 
-class Company
+class Company : public showingDetails
 {
     string companyname;
     vector<Model *> models;
@@ -35,11 +48,11 @@ public:
     string getCompanyName() const { return companyname; }
 
     void addModel(Model *m) { models.push_back(m); }
-    void showCompany() const
+    void show() const override
     {
         cout << "\n Company: " << companyname << "\n";
         for (auto m : models)
-            displayModel(*m);
+            m->show();
     }
 
     ~Company()
@@ -48,7 +61,7 @@ public:
             delete m;
     }
 };
-class Variety
+class Variety : public showingDetails
 {
     string vname;
     vector<Company *> companies;
@@ -57,11 +70,12 @@ public:
     Variety(string varietyname = "") : vname(varietyname) {};
     vector<Company *> &getCompanies() { return companies; }
     void addCompany(Company *c) { companies.push_back(c); };
-    void showVariety() const
+    string getVarietyName() const { return vname; }
+    void show() const override
     {
         cout << "\n  Variety: " << vname << "\n";
         for (auto c : companies)
-            c->showCompany();
+            c->show();
     }
     ~Variety()
     {
@@ -70,7 +84,7 @@ public:
     }
 };
 
-class Enterprises
+class Enterprises : public showingDetails
 {
     string Enterprisename, ownerName, OwnerPhonenumber;
     vector<Company *> companies;
@@ -82,14 +96,15 @@ public:
     vector<Variety *> &getVarieties() { return varieties; }
     void addCompany(Company *c) { companies.push_back(c); }
     void addVariety(Variety *v) { varieties.push_back(v); }
-    void getEnterpriseName() const { cout << "-> " << Enterprisename; }
-    void show() const
+    string getEnterpriseName() const { return Enterprisename; }
+
+    void show() const override
     {
         cout << "\nEnterprise: " << Enterprisename
              << "\nOwner: " << ownerName
              << "\nPhone: " << OwnerPhonenumber << "\n";
         for (auto v : varieties)
-            v->showVariety();
+            v->show();
     }
 
     ~Enterprises()
@@ -182,6 +197,70 @@ void displayModel(const Model &m)
          << " | Color: " << m.modelcolour << "\n";
 }
 
+class RentalManager
+{
+    string filename;
+
+public:
+    RentalManager(string fname = "rentalRecords.txt") : filename(fname) {}
+
+    void storeRentalDetails(const string &username, const string &userphone, const string &enterprise,
+                            const string &variety, const string &company,
+                            const string &model, double price)
+    {
+        ofstream file(filename, ios::app);
+        if (!file.is_open())
+        {
+            cerr << "❌ Error: Could not open rental records file!\n";
+            return;
+        }
+
+        time_t now = time(0);
+        char *dt = ctime(&now);
+
+        file << "User: " << username
+             << " | Phone: " << userphone
+             << " | Enterprise: " << enterprise
+             << " | Variety: " << variety
+             << " | Company: " << company
+             << " | Model: " << model
+             << " | Price: " << price
+             << " | Date: " << dt;
+        file << "---------------------------------------------\n";
+        file.close();
+
+        cout << "\n✅ Rental Details Saved Successfully!\n";
+    }
+
+    void processPayment()
+    {
+        int paymentChoice;
+        cout << "\nChoose Payment Method:\n";
+
+        cout << "1. Debit/Credit Card\n";
+        cout << "2. Cash on Delivery\n";
+        cout << "Enter your choice: ";
+        cin >> paymentChoice;
+
+        switch (paymentChoice)
+        {
+        case 1:
+            cout << "Enter Card Number: ";
+            {
+                string card;
+                cin >> card;
+                cout << "Processing Card Payment...\n✅ Payment Successful!\n";
+            }
+            break;
+        case 2:
+            cout << "You selected Cash on Delivery.\n✅ Order Confirmed!\n";
+            break;
+        default:
+            cout << "Invalid choice! Defaulting to Cash on Delivery.\n✅ Order Confirmed!\n";
+        }
+    }
+};
+
 //====================userDetails===================================
 class UserDetails
 {
@@ -192,7 +271,7 @@ public:
     UserDetails(string fname = "userDetails.txt") : filename(fname) {}
     // member function of class userDetails to register the user
 
-    void UserEnterpriseDetailEntry()
+    void UserEnterpriseDetailEntry(const string &currentUsername, const string &currentPhone)
     {
         vector<Enterprises *> enterprises = loadData("sellerDetails.txt");
         cout << "\nWELCOME TO THE USER PORTAL\n";
@@ -202,9 +281,7 @@ public:
         // Show all enterprises
         for (size_t i = 0; i < enterprises.size(); i++)
         {
-            cout << i + 1 << ". ";
-            enterprises[i]->getEnterpriseName();
-            cout << "\n";
+            cout << i + 1 << ". " << enterprises[i]->getEnterpriseName() << "\n";
         }
 
         int eChoice;
@@ -238,7 +315,7 @@ public:
         }
 
         for (size_t i = 0; i < varieties.size(); i++)
-            cout << i + 1 << ". " << "[ " << i + 1 << " ] " << "\n";
+            cout << i + 1 << ". " << varieties[i]->getVarietyName() << "\n";
 
         int vChoice;
         cout << "\nEnter Variety number: ";
@@ -315,6 +392,20 @@ public:
         cout << "\n✅ You Selected:\n";
         displayModel(*selectedModel);
 
+        RentalManager rentalManager; // call rentalmanager
+
+        string enterpriseName = selectedEnterprise->getEnterpriseName();
+        string varietyName = selectedVariety->getVarietyName();
+        string modelName = selectedModel->getModelName();
+        string companyName = selectedCompany->getCompanyName();
+        double modelPrice = selectedModel->getPrice();
+
+        // Store rental details
+        rentalManager.storeRentalDetails(currentUsername, currentPhone, enterpriseName, varietyName, companyName, modelName, modelPrice);
+
+        // Ask for payment
+        rentalManager.processPayment();
+
         // Cleanup memory
         for (auto e : enterprises)
             delete e;
@@ -362,7 +453,9 @@ public:
             file.close();
             cout << "\nRegistration successful!\n";
             cout << "-------------------------------------\n";
-            UserEnterpriseDetailEntry();
+            string currentUsername = username;
+            string currentPhone = phonenumber;
+            UserEnterpriseDetailEntry(currentUsername, currentPhone);
         }
         else
         {
@@ -394,7 +487,26 @@ public:
                 if (uuser == username && upass == password)
                 {
                     cout << "\nLogin successful!\n";
-                    UserEnterpriseDetailEntry();
+                    string currentUsername = username;
+                    string currentPhone;
+
+                    ifstream f(filename);
+                    string line, u, p, ph;
+                    while (getline(f, line))
+                    {
+                        stringstream ss(line);
+                        getline(ss, u, ',');
+                        getline(ss, p, ',');
+                        getline(ss, ph, ',');
+                        if (u == username)
+                        {
+                            currentPhone = ph;
+                            break;
+                        }
+                    }
+
+                    UserEnterpriseDetailEntry(currentUsername, currentPhone);
+
                     return true;
                 }
             }
@@ -505,19 +617,11 @@ int main()
         if (portalChoice == 2)
         {
             cout << "You have accessed the Service Provider Portal.\n";
-            // vector<Enterprises *> enterprises = loadData("sellerDetails.txt");
-
-            // for (auto e : enterprises)
-            // {
-            //     e->showEnterprise();
-            //     delete e; // cleanup
-            // }
-            // return 0;
         }
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        std::cerr << e.what() << '\n';
+        cerr << e.what() << '\n';
     }
     return 0;
 }
