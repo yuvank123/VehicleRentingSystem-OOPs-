@@ -24,6 +24,7 @@ public:
         : modelname(nameOfModel), modelprice(priceOfModel), modelnumber(phonenumberOfModel), modelcolour(colourOfModel) {}
 
     string getModelName() const { return modelname; }
+    double getmodelprice() const { return modelprice;}
     friend void displayModel(const Model &m);
 
     void show() const override {
@@ -176,9 +177,9 @@ class RentalManager {
     string filename;
 public:
     RentalManager(string fname = "rentalRecords.txt") : filename(fname) {}
-    void storeRentalDetails(const string &username, const string &enterprise,
+    void storeRentalDetails(const string &username, const string &phonenumber, const string &enterprise,
                             const string &variety, const string &company,
-                            const string &model) {
+                            const string &model, const double &modelprice) {
         ofstream file(filename, ios::app);
         if (!file.is_open()) {
             cerr << "Error: Could not open rental records file!\n";
@@ -189,10 +190,12 @@ public:
         char *dt = ctime(&now);
 
         file << "User: " << username
+             << " | phonenumber: " << phonenumber
              << " | Enterprise: " << enterprise
              << " | Variety: " << variety
              << " | Company: " << company
              << " | Model: " << model
+             << " | Price: " << modelprice
              << " | Date: " << dt;
         file << "---------------------------------------------\n";
         file.close();
@@ -200,9 +203,9 @@ public:
         cout << "\nRental Details Saved Successfully!\n";
     }
 
-    void storeRentalDetails(const string &enterprise,
+    void storeRentalDetails(const string &phonenumber ,const string &enterprise,
                             const string &variety, const string &company,
-                            const string &model) {
+                            const string &model, const double &modelprice) {
         ofstream file(filename, ios::app);
         if (!file.is_open()) {
             cerr << "Error: Could not open rental records file!\n";
@@ -213,10 +216,12 @@ public:
         char *dt = ctime(&now);
 
         file << "User: Guest"
+             << " | phonenumber: " << phonenumber
              << " | Enterprise: " << enterprise
              << " | Variety: " << variety
              << " | Company: " << company
              << " | Model: " << model
+             << " | Price: " << modelprice
              << " | Date: " << dt;
         file << "---------------------------------------------\n";
         file.close();
@@ -369,16 +374,18 @@ public:
 
         RentalManager rentalManager;
         string username = this->username;
+        string phonenumber = this->phonenumber;
         if(username.size() == 0){username = "GuestUser";}
         string enterpriseName = selectedEnterprise->getEnterpriseName();
         string varietyName = selectedVariety->getVarietyName();
         string companyName = selectedCompany->getCompanyName();
         string modelName = selectedModel->getModelName();
+        double modelprice = selectedModel->getmodelprice();
 
         if (username == "GuestUser")
-            rentalManager.storeRentalDetails(enterpriseName, varietyName, companyName, modelName);
+            rentalManager.storeRentalDetails(phonenumber, enterpriseName, varietyName, companyName, modelName, modelprice);
         else
-            rentalManager.storeRentalDetails(username, enterpriseName, varietyName, companyName, modelName);
+            rentalManager.storeRentalDetails(username, phonenumber, enterpriseName, varietyName, companyName, modelName, modelprice);
 
         rentalManager.processPayment();
 
@@ -444,6 +451,170 @@ public:
         return false;
     }
 };
+class EnterpriseSeller
+{
+private:
+    string enterpriseName;
+    string ownerName;
+    string phone;
+
+    struct Model
+    {
+        string name;
+        double price;
+        string number;
+        string color;
+    };
+
+    struct Company
+    {
+        string name;
+        vector<Model> models;
+    };
+
+    struct Variety
+    {
+        string name;
+        vector<Company> companies;
+    };
+
+    vector<Variety> varieties;
+
+public:
+    
+    friend istream &operator>>(istream &in, EnterpriseSeller &s)
+    {
+        cout << "\n=== Set Up New Enterprise ===\n";
+        cout << "Enter enterprise name: ";
+        in.ignore();
+        getline(in, s.enterpriseName);
+        cout << "Enter owner name: ";
+        getline(in, s.ownerName);
+        cout << "Enter phone number: ";
+        getline(in, s.phone);
+
+        bool addMoreVarieties = true;
+        while (addMoreVarieties)
+        {
+            Variety v;
+            cout << "\nEnter vehicle variety (e.g., Car, Bike, Truck): ";
+            getline(in, v.name);
+
+            bool addMoreCompanies = true;
+            while (addMoreCompanies)
+            {
+                Company c;
+                cout << "Enter company name: ";
+                getline(in, c.name);
+
+                bool addMoreModels = true;
+                while (addMoreModels)
+                {
+                    Model m;
+                    cout << "Enter model name: ";
+                    getline(in, m.name);
+                    cout << "Enter model color: ";
+                    getline(in, m.color);
+                    cout << "Enter model number: ";
+                    getline(in, m.number);
+                    cout << "Enter model price: ";
+                    in >> m.price;
+                    in.ignore();
+                    c.models.push_back(m);
+
+                    char choice;
+                    cout << "Add another model for this company? (y/n): ";
+                    in >> choice;
+                    in.ignore();
+                    if (choice == 'n' || choice == 'N')
+                        addMoreModels = false;
+                }
+
+                v.companies.push_back(c);
+
+                char choice;
+                cout << "Add another company for this variety? (y/n): ";
+                in >> choice;
+                in.ignore();
+                if (choice == 'n' || choice == 'N')
+                    addMoreCompanies = false;
+            }
+
+            s.varieties.push_back(v);
+
+            char choice;
+            cout << "Add another variety? (y/n): ";
+            in >> choice;
+            in.ignore();
+            if (choice == 'n' || choice == 'N')
+                addMoreVarieties = false;
+        }
+
+        cout << "\n✅ Enterprise successfully created!\n";
+        cout << "Your enterprise name: " << s.enterpriseName << "\n";
+        cout << "-----------------------------------------\n";
+        return in;
+    }
+
+    friend ostream &operator<<(ostream &out, const EnterpriseSeller &s)
+    {
+        out << "\nEnterprise: " << s.enterpriseName
+            << "\nOwner: " << s.ownerName
+            << "\nPhone: " << s.phone << "\n";
+
+        for (const auto &v : s.varieties)
+        {
+            out << "  Variety: " << v.name << "\n";
+            for (const auto &c : v.companies)
+            {
+                out << "    Company: " << c.name << "\n";
+                for (const auto &m : c.models)
+                {
+                    out << "      Model: " << m.name
+                        << " | Price: " << m.price
+                        << " | Number: " << m.number
+                        << " | Color: " << m.color << "\n";
+                }
+            }
+        }
+        return out;
+    }
+
+    void saveToFile(string filename)
+    {
+        ofstream file(filename, ios::app);
+        if (!file.is_open())
+        {
+            cerr << "Error: Unable to open file for saving seller details!\n";
+            return;
+        }
+
+        file << "Enterprise:" << enterpriseName
+             << "|Owner:" << ownerName
+             << "|Phone:" << phone << "\n";
+
+        for (auto &v : varieties)
+        {
+            file << "Variety:" << v.name << "\n";
+            for (auto &c : v.companies)
+            {
+                file << "Company:" << c.name << "\n";
+                for (auto &m : c.models)
+                {
+                    file << "Model:" << m.name
+                         << "|Price:" << m.price
+                         << "|Number:" << m.number
+                         << "|Color:" << m.color << "\n";
+                }
+            }
+        }
+
+        file << "END_ENTERPRISE\n";
+        file.close();
+    }
+
+    string getEnterpriseName() const { return enterpriseName; }
+};
 
 int main() {
     cout << "Welcome to Vehicle Rental System\n";
@@ -477,9 +648,34 @@ int main() {
                 cout << "Invalid choice! Exiting...\n";
             }
         }
-        if (portalChoice == 2) {
-            cout << "You have accessed the Service Provider Portal.\n";
-        }
+        if (portalChoice == 2)
+{
+    cout << "You have accessed the Service Provider Portal.\n";
+    cout << "-------------------------------------\n";
+
+    int hasEnterprise;
+    cout << "Do you already have an enterprise?\n";
+    cout << "1. Yes\n2. No\nEnter your choice: ";
+    cin >> hasEnterprise;
+
+    EnterpriseSeller seller;
+    if (hasEnterprise == 2)
+    {
+        cin >> seller; 
+        seller.saveToFile("sellerDetails.txt");
+
+        cout << "\n Enterprise successfully saved!\n";
+        cout << seller;
+
+        cout << "\nPlease login again using your Enterprise ID next time.\n";
+    }
+    else
+    {
+        cout << "Invalid choice!\n";
+    }
+}
+
+    
     } catch (const exception &e) {
         cerr << e.what() << '\n';
     }

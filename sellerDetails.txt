@@ -154,3 +154,14 @@ Variety:Bike
 Company:tornado
 Model:poot|Price:700|Number:87586|Color:silver
 END_ENTERPRISE
+
+Enterprise:oops|Owner:yuvi|Phone:1234567890
+Variety:car
+Company:honda
+Model:pok|Price:23000|Number:1232423|Color:black
+END_ENTERPRISE
+Enterprise:vehico|Owner:gokuu|Phone:1234567890
+Variety:Car
+Company:hero
+Model:asd12|Price:12345|Number:123|Color:blue
+END_ENTERPRISE
